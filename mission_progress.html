@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>MISSION // Progreso</title>
+<style>
+:root{
+  --bg:#07090d;--panel:#0d1118;--panel2:#121823;--line:#202938;--text:#f4f7fb;
+  --muted:#8994a6;--accent:#7c5cff;--accent2:#18d6a3;--warn:#ffc857;--danger:#ff5c7a;
+  --shadow:0 18px 60px rgba(0,0,0,.28);--r:20px
+}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% -10%,#17132d 0,transparent 32%),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,textarea,select{font:inherit}button{cursor:pointer}
+.app{max-width:1280px;margin:auto;padding:20px 18px 90px}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:22px;position:sticky;top:0;z-index:20;padding:10px 0;background:linear-gradient(var(--bg) 70%,transparent)}
+.brand{font-weight:900;letter-spacing:.08em;font-size:14px}.brand span{color:var(--accent)}
+.nav{display:flex;gap:6px;background:#0a0d13cc;border:1px solid var(--line);padding:5px;border-radius:14px;backdrop-filter:blur(16px)}
+.nav button{background:transparent;border:0;color:var(--muted);padding:9px 12px;border-radius:10px;font-weight:700;font-size:13px}
+.nav button.active,.nav button:hover{background:var(--panel2);color:var(--text)}
+.hero{display:grid;grid-template-columns:1.35fr .65fr;gap:18px;margin-bottom:18px}
+.card{background:linear-gradient(145deg,rgba(18,24,35,.96),rgba(10,14,21,.96));border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.heroMain{padding:30px;min-height:300px;position:relative;overflow:hidden}
+.heroMain:after{content:"";position:absolute;width:300px;height:300px;border-radius:50%;right:-100px;top:-140px;background:radial-gradient(circle,var(--accent),transparent 68%);opacity:.18;pointer-events:none}
+.kicker{color:var(--accent2);font-size:12px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+h1{font-size:clamp(32px,5vw,62px);line-height:.96;margin:10px 0 14px;max-width:720px;letter-spacing:-.045em}
+.subtitle{color:var(--muted);max-width:650px;font-size:15px}
+.progressWrap{margin-top:28px}.progressTop{display:flex;justify-content:space-between;align-items:end;margin-bottom:9px}.bigPct{font-size:28px;font-weight:900}.bar{height:12px;background:#1b2230;border-radius:99px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;box-shadow:0 0 24px rgba(124,92,255,.45);transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.heroSide{padding:24px;display:flex;flex-direction:column;justify-content:space-between}
+.level{font-size:54px;font-weight:950;line-height:1}.level small{font-size:13px;color:var(--muted);display:block;margin-bottom:7px;letter-spacing:.12em}
+.xpbar{height:7px;background:#202735;border-radius:99px;overflow:hidden;margin-top:13px}.xpfill{height:100%;background:var(--accent);transition:width .5s}
+.statgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat{padding:19px}.stat .v{font-size:25px;font-weight:900}.stat .l{color:var(--muted);font-size:12px;margin-top:5px}
+.grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}.section{padding:22px}.sectionTitle{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.sectionTitle h2{font-size:17px;margin:0}.muted{color:var(--muted)}
+.btn{border:1px solid var(--line);background:#151c28;color:var(--text);border-radius:12px;padding:11px 15px;font-weight:800}.btn:hover{filter:brightness(1.15)}.btn.primary{background:linear-gradient(135deg,var(--accent),#5c48df);border-color:transparent}.btn.big{font-size:16px;padding:17px 25px;border-radius:15px;box-shadow:0 10px 35px rgba(124,92,255,.22)}
+.register{display:flex;align-items:center;justify-content:space-between;gap:15px;padding:20px;margin-bottom:18px;background:linear-gradient(90deg,rgba(124,92,255,.13),rgba(24,214,163,.05));border:1px solid #352d65;border-radius:18px}
+.register strong{display:block;font-size:17px}.register span{color:var(--muted);font-size:13px}
+.map{display:flex;gap:0;overflow-x:auto;padding:15px 5px 24px;scrollbar-width:thin}.stage{min-width:155px;position:relative;text-align:center}.stage:not(:last-child):after{content:"";height:3px;position:absolute;top:39px;left:calc(50% + 28px);width:calc(100% - 56px);background:#283140}.stage.done:not(:last-child):after{background:linear-gradient(90deg,var(--accent2),var(--accent))}.node{width:58px;height:58px;border-radius:50%;margin:auto;display:grid;place-items:center;background:#171d28;border:2px solid #2b3443;font-size:22px;position:relative;z-index:2}.stage.active .node{border-color:var(--warn);box-shadow:0 0 0 7px rgba(255,200,87,.08),0 0 30px rgba(255,200,87,.25)}.stage.done .node{border-color:var(--accent2);background:rgba(24,214,163,.1)}.stage.locked{opacity:.45}.stageName{font-weight:800;font-size:12px;margin-top:10px}.stageMeta{font-size:11px;color:var(--muted);margin-top:3px}
+.achievementGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.achievement{padding:15px;border:1px solid var(--line);border-radius:15px;background:#0c1119}.achievement.unlocked{border-color:#3a8d7a;background:rgba(24,214,163,.06)}.achievement .icon{font-size:25px}.achievement b{display:block;margin-top:8px;font-size:12px}.achievement small{color:var(--muted);font-size:11px}
+canvas{width:100%;height:250px;display:block}.boss{padding:18px;border-radius:16px;border:1px solid #5a4521;background:linear-gradient(135deg,rgba(255,200,87,.09),rgba(255,92,122,.04));margin-bottom:10px}.boss .tag{color:var(--warn);font-size:10px;font-weight:900;letter-spacing:.12em}.boss h3{margin:7px 0}.boss p{margin:0;color:var(--muted);font-size:13px}
+.log{display:flex;flex-direction:column;gap:8px}.logrow{display:flex;justify-content:space-between;gap:10px;padding:13px;border:1px solid var(--line);border-radius:13px}.logrow strong{font-size:13px}.logrow small{color:var(--muted)}.xp{color:var(--accent2);font-weight:900;font-size:12px}
+.hidden{display:none!important}.view{display:none}.view.active{display:block}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:18px;z-index:50}.modal.open{display:flex}.modalBox{width:min(620px,100%);max-height:90vh;overflow:auto;padding:24px;background:#0d121a;border:1px solid var(--line);border-radius:22px}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:var(--muted);font-weight:800}.field input,.field textarea,.field select{width:100%;background:#080c12;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:11px;outline:none}.field textarea{min-height:90px;resize:vertical}.modalActions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}
+.toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;z-index:100;background:#eef2f8;color:#07090d;padding:13px 18px;border-radius:13px;font-weight:900;box-shadow:0 15px 45px #0008;transition:.35s}.toast.show{opacity:1;transform:translate(-50%,0)}
+.celebrate{position:fixed;inset:0;pointer-events:none;z-index:90;overflow:hidden}.conf{position:absolute;width:7px;height:16px;animation:fall 1.8s linear forwards}@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}
+footer{margin-top:25px;color:#596476;text-align:center;font-size:11px}
+@media(max-width:850px){.hero,.grid{grid-template-columns:1fr}.statgrid{grid-template-columns:repeat(2,1fr)}.achievementGrid{grid-template-columns:1fr 1fr}.nav button{padding:8px 7px;font-size:11px}.heroMain{padding:23px}.register{align-items:stretch;flex-direction:column}}
+@media(max-width:520px){.app{padding:10px 10px 70px}.nav{width:100%;justify-content:space-between}.topbar{align-items:flex-start;flex-direction:column}.nav{overflow:auto}.formgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.achievementGrid{grid-template-columns:1fr}.stage{min-width:135px}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand">MISSION<span>//</span>PROGRESS</div>
+    <nav class="nav">
+      <button data-view="dashboard" class="active">Dashboard</button>
+      <button data-view="mapa">Mapa</button>
+      <button data-view="stats">Stats</button>
+      <button data-view="config">Config</button>
+    </nav>
+  </header>
+
+  <main id="dashboard" class="view active">
+    <section class="hero">
+      <div class="card heroMain">
+        <div class="kicker">MAIN QUEST</div>
+        <h1 id="goalTitle">Misión 10K</h1>
+        <div class="subtitle" id="goalSub">Construye tu progreso, una sesión a la vez.</div>
+        <div class="progressWrap">
+          <div class="progressTop"><span class="muted">PROGRESO TOTAL</span><span class="bigPct" id="pct">0%</span></div>
+          <div class="bar"><div id="mainFill" class="fill" style="width:0%"></div></div>
+          <div class="muted" style="margin-top:8px;font-size:12px" id="remaining">—</div>
+        </div>
+      </div>
+      <div class="card heroSide">
+        <div>
+          <div class="level"><small>NIVEL</small><span id="level">01</span></div>
+          <div class="muted" id="xpText">0 / 100 XP</div>
+          <div class="xpbar"><div class="xpfill" id="xpFill" style="width:0%"></div></div>
+        </div>
+        <div>
+          <div class="muted" style="font-size:12px">PRÓXIMO OBJETIVO</div>
+          <strong id="nextMilestone">Registra tu primera sesión</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="register">
+      <div><strong>¿Qué has hecho hoy?</strong><span>Registra una sesión y el sistema recalculará XP, racha, etapas y logros.</span></div>
+      <button class="btn primary big" onclick="openRegister()">＋ REGISTRAR</button>
+    </div>
+
+    <section class="statgrid">
+      <div class="card stat"><div class="v" id="weekVal">0</div><div class="l">PROGRESO ESTA SEMANA</div></div>
+      <div class="card stat"><div class="v" id="streak">0 🔥</div><div class="l">RACHA ACTUAL</div></div>
+      <div class="card stat"><div class="v" id="days">—</div><div class="l">DÍAS RESTANTES</div></div>
+      <div class="card stat"><div class="v" id="sessions">0</div><div class="l">SESIONES</div></div>
+    </section>
+
+    <div class="grid">
+      <section class="card section">
+        <div class="sectionTitle"><h2>CAMINO DE LA MISIÓN</h2><button class="btn" onclick="showView('mapa')">Ver mapa</button></div>
+        <div class="map" id="mapMini"></div>
+      </section>
+      <section class="card section">
+        <div class="sectionTitle"><h2>⚔️ BOSS FIGHTS</h2></div>
+        <div id="bosses"></div>
+      </section>
+    </div>
+
+    <div class="grid" style="margin-top:18px">
+      <section class="card section">
+        <div class="sectionTitle"><h2>EVOLUCIÓN</h2><span class="muted" id="chartCaption">últimas sesiones</span></div>
+        <canvas id="chart"></canvas>
+      </section>
+      <section class="card section">
+        <div class="sectionTitle"><h2>ÚLTIMOS REGISTROS</h2></div>
+        <div class="log" id="recent"></div>
+      </section>
+    </div>
+  </main>
+
+  <main id="mapa" class="view">
+    <section class="card section">
+      <div class="sectionTitle"><h2>MAPA DE PROGRESO</h2><span class="muted">Avanza etapa por etapa.</span></div>
+      <div class="map" id="mapFull"></div>
+    </section>
+  </main>
+
+  <main id="stats" class="view">
+    <div class="statgrid">
+      <div class="card stat"><div class="v" id="totalMetric">0</div><div class="l">TOTAL ACUMULADO</div></div>
+      <div class="card stat"><div class="v" id="avgMetric">0</div><div class="l">MEDIA / SESIÓN</div></div>
+      <div class="card stat"><div class="v" id="bestMetric">0</div><div class="l">RÉCORD</div></div>
+      <div class="card stat"><div class="v" id="superMetric">0</div><div class="l">ETAPAS SUPERADAS</div></div>
+    </div>
+    <section class="card section">
+      <div class="sectionTitle"><h2>PROGRESO ACUMULADO</h2></div><canvas id="chart2"></canvas>
+    </section>
+  </main>
+
+  <main id="config" class="view">
+    <section class="card section">
+      <div class="sectionTitle"><h2>CONFIGURACIÓN DE LA MISIÓN</h2></div>
+      <div class="formgrid">
+        <div class="field full"><label>NOMBRE DEL OBJETIVO</label><input id="cfgTitle"></div>
+        <div class="field full"><label>DESCRIPCIÓN</label><input id="cfgDesc"></div>
+        <div class="field"><label>OBJETIVO FINAL (número)</label><input id="cfgTarget" type="number" min="1" step="0.1"></div>
+        <div class="field"><label>UNIDAD</label><input id="cfgUnit" placeholder="km, kg, sesiones, repeticiones..."></div>
+        <div class="field"><label>FECHA DE INICIO</label><input id="cfgStart" type="date"></div>
+        <div class="field"><label>FECHA LÍMITE</label><input id="cfgDeadline" type="date"></div>
+        <div class="field full"><label>OBJETIVOS SEMANALES (uno por línea: cantidad | nombre)</label><textarea id="cfgWeeks" placeholder="3 | Adaptación&#10;5 | Construcción&#10;7 | Consolidación"></textarea></div>
+      </div>
+      <div class="modalActions"><button class="btn" onclick="resetAll()">Reiniciar progreso</button><button class="btn primary" onclick="saveConfig()">Guardar configuración</button></div>
+    </section>
+  </main>
+
+  <footer>Todo se guarda localmente en este dispositivo · sin backend</footer>
+</div>
+
+<div class="modal" id="registerModal">
+  <div class="modalBox">
+    <div class="sectionTitle"><h2>REGISTRAR PROGRESO</h2><button class="btn" onclick="closeRegister()">×</button></div>
+    <div class="formgrid">
+      <div class="field"><label>CANTIDAD</label><input id="rAmount" type="number" min="0" step="0.01" placeholder="Ej. 3.5"></div>
+      <div class="field"><label>FECHA</label><input id="rDate" type="date"></div>
+      <div class="field"><label>DURACIÓN (min)</label><input id="rDuration" type="number" min="0" placeholder="Opcional"></div>
+      <div class="field"><label>TIPO</label><select id="rType"><option>Entrenamiento</option><option>Carrera</option><option>Sesión</option><option>Descanso activo</option><option>Otro</option></select></div>
+      <div class="field"><label>SENSACIONES</label><select id="rFeel"><option>🔥 Excelente</option><option>⚡ Bien</option><option>😐 Normal</option><option>🥵 Duro</option><option>🧱 Muy duro</option></select></div>
+      <div class="field"><label>XP EXTRA</label><input id="rBonus" type="number" min="0" max="500" step="5" value="0"></div>
+      <div class="field full"><label>NOTAS</label><textarea id="rNotes" placeholder="¿Cómo ha ido? ¿Qué has aprendido?"></textarea></div>
+    </div>
+    <div class="modalActions"><button class="btn" onclick="closeRegister()">Cancelar</button><button class="btn primary" onclick="saveEntry()">GUARDAR + GANAR XP</button></div>
+  </div>
+</div>
+<div class="toast" id="toast"></div><div class="celebrate" id="celebrate"></div>
+
+<script>
+const KEY="mission_progress_v1";
+const defaultData={
+  config:{
+    title:"Misión 10K",desc:"Construye la capacidad de correr 10 km con constancia y control.",
+    target:10,unit:"km",start:"2026-09-15",deadline:"2026-11-08",
+    weeks:[{goal:2,name:"Arranque"},{goal:3,name:"Adaptación"},{goal:4,name:"Construcción"},{goal:5,name:"Resistencia"},{goal:6,name:"Consolidación"},{goal:7,name:"Umbral"},{goal:8,name:"Puesta a punto"},{goal:10,name:"BOSS · 10K"}]
+  },entries:[],xp:0,unlocked:[]
+};
+let data=load();
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||structuredClone(defaultData)}catch(e){return structuredClone(defaultData)}}
+function save(){localStorage.setItem(KEY,JSON.stringify(data))}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+function total(){return data.entries.reduce((a,e)=>a+Number(e.amount||0),0)}
+function pct(){return Math.min(100,total()/data.config.target*100)}
+function level(){return Math.floor(data.xp/100)+1}
+function weekIndex(){
+  const s=new Date(data.config.start+"T00:00:00"), now=new Date();
+  return Math.max(0,Math.min(data.config.weeks.length-1,Math.floor((now-s)/604800000)));
+}
+function weekTotal(i=weekIndex()){
+  const s=new Date(data.config.start+"T00:00:00"); s.setDate(s.getDate()+i*7);
+  const e=new Date(s);e.setDate(e.getDate()+7);
+  return data.entries.filter(x=>{let d=new Date(x.date+"T00:00:00");return d>=s&&d<e}).reduce((a,x)=>a+Number(x.amount),0);
+}
+function stageState(i){
+  const prev=i===0?0:data.config.weeks.slice(0,i).reduce((a,x)=>a+x.goal,0);
+  const goal=data.config.weeks[i]?.goal||0, t=total();
+  if(i>0 && t<prev)return "locked";
+  if(t>=prev+goal)return "done";
+  if(t>prev)return "active";
+  return "pending";
+}
+function renderMap(id){
+  const el=document.getElementById(id); if(!el)return;
+  el.innerHTML=data.config.weeks.map((w,i)=>{
+    const st=stageState(i), icon=st==="done"?"✓":st==="locked"?"🔒":st==="active"?"⚡":"○";
+    return `<div class="stage ${st}"><div class="node">${icon}</div><div class="stageName">${esc(w.name)}</div><div class="stageMeta">${w.goal} ${esc(data.config.unit)}</div></div>`
+  }).join("");
+}
+function renderBosses(){
+  const el=document.getElementById("bosses");
+  const bosses=[
+    {at:.25,n:"FIRST BLOOD",d:"Alcanza el 25% del objetivo.",xp:100},
+    {at:.5,n:"HALFWAY",d:"Cruza la mitad de la misión.",xp:200},
+    {at:.75,n:"NO TURNING BACK",d:"Supera el 75%.",xp:300},
+    {at:1,n:"FINAL BOSS",d:"Completa el objetivo final.",xp:500}
+  ];
+  el.innerHTML=bosses.map(b=>`<div class="boss" style="${pct()/100>=b.at?'opacity:.58':''}">
+    <div class="tag">${pct()/100>=b.at?"✓ DERROTADO":"BOSS FIGHT · +"+b.xp+" XP"}</div><h3>${b.n}</h3><p>${b.d}</p></div>`).join("");
+}
+function draw(canvasId, cumulative=false){
+  const c=document.getElementById(canvasId);if(!c)return;
+  const r=c.getBoundingClientRect(),dpr=devicePixelRatio||1,w=Math.max(300,r.width),h=250;
+  c.width=w*dpr;c.height=h*dpr;const x=c.getContext("2d");x.scale(dpr,dpr);
+  x.clearRect(0,0,w,h);const vals=[];let acc=0;
+  const entries=[...data.entries].sort((a,b)=>a.date.localeCompare(b.date));
+  entries.forEach(e=>{acc+=+e.amount;vals.push(cumulative?acc:+e.amount)});
+  if(!vals.length){x.fillStyle="#596476";x.font="14px system-ui";x.fillText("Registra datos para ver tu evolución.",18,35);return}
+  const max=Math.max(data.config.target,...vals,1)*1.08,pad=25;
+  x.strokeStyle="#202938";x.lineWidth=1;
+  for(let i=0;i<4;i++){let yy=pad+i*(h-2*pad)/3;x.beginPath();x.moveTo(pad,yy);x.lineTo(w-pad,yy);x.stroke()}
+  x.beginPath();vals.forEach((v,i)=>{let xx=pad+(w-2*pad)*(i/Math.max(1,vals.length-1)),yy=h-pad-(v/max)*(h-2*pad);i?x.lineTo(xx,yy):x.moveTo(xx,yy)});x.strokeStyle="#7c5cff";x.lineWidth=3;x.stroke();
+  vals.forEach((v,i)=>{let xx=pad+(w-2*pad)*(i/Math.max(1,vals.length-1)),yy=h-pad-(v/max)*(h-2*pad);x.beginPath();x.arc(xx,yy,4,0,Math.PI*2);x.fillStyle="#18d6a3";x.fill()});
+}
+function render(){
+  document.getElementById("goalTitle").textContent=data.config.title;
+  document.getElementById("goalSub").textContent=data.config.desc;
+  const p=pct();document.getElementById("pct").textContent=Math.round(p)+"%";
+  document.getElementById("mainFill").style.width=p+"%";
+  document.getElementById("remaining").textContent=`${Math.max(0,data.config.target-total()).toFixed(2)} ${data.config.unit} restantes de ${data.config.target} ${data.config.unit}`;
+  const lv=level(), within=data.xp%100;document.getElementById("level").textContent=String(lv).padStart(2,"0");
+  document.getElementById("xpText").textContent=`${within} / 100 XP · ${data.xp} XP total`;
+  document.getElementById("xpFill").style.width=within+"%";
+  const wi=weekIndex(),wv=weekTotal(wi),wg=data.config.weeks[wi]?.goal||0;
+  document.getElementById("weekVal").textContent=`${wv.toFixed(1)} / ${wg} ${data.config.unit}`;
+  document.getElementById("sessions").textContent=data.entries.length;
+  const deadline=new Date(data.config.deadline+"T23:59:59"),days=Math.max(0,Math.ceil((deadline-new Date())/86400000));
+  document.getElementById("days").textContent=days;
+  const dates=[...new Set(data.entries.map(e=>e.date))].sort().reverse();let streak=0,cur=new Date();
+  for(const d of dates){let ds=new Date(d+"T00:00:00");let diff=Math.round((new Date(cur.toDateString())-ds)/86400000);if(diff===0||diff===1){streak++;cur=ds}else if(diff>1)break}
+  document.getElementById("streak").textContent=streak+" 🔥";
+  const next=data.config.weeks.findIndex((_,i)=>stageState(i)!=="done");
+  document.getElementById("nextMilestone").textContent=next<0?"MISIÓN COMPLETADA":data.config.weeks[next].name+" · "+data.config.weeks[next].goal+" "+data.config.unit;
+  document.getElementById("recent").innerHTML=data.entries.slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,7).map(e=>`<div class="logrow"><div><strong>${esc(e.type)} · ${e.amount} ${esc(data.config.unit)}</strong><small>${esc(e.date)}${e.notes?" · "+esc(e.notes):""}</small></div><div class="xp">+${e.xp} XP</div></div>`).join("")||'<div class="muted">Todavía no hay registros.</div>';
+  renderMap("mapMini");renderMap("mapFull");renderBosses();draw("chart",false);draw("chart2",true);
+  document.getElementById("totalMetric").textContent=total().toFixed(2)+" "+data.config.unit;
+  document.getElementById("avgMetric").textContent=(data.entries.length?total()/data.entries.length:0).toFixed(2);
+  document.getElementById("bestMetric").textContent=(data.entries.length?Math.max(...data.entries.map(e=>+e.amount)):0).toFixed(2);
+  document.getElementById("superMetric").textContent=data.config.weeks.filter((_,i)=>stageState(i)==="done").length;
+  fillConfig();
+}
+function toast(t){const x=document.getElementById("toast");x.textContent=t;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),2400)}
+function celebrate(){const box=document.getElementById("celebrate");box.innerHTML="";for(let i=0;i<70;i++){const z=document.createElement("i");z.className="conf";z.style.left=Math.random()*100+"%";z.style.top=(-10-Math.random()*20)+"%";z.style.background=["#7c5cff","#18d6a3","#ffc857","#ff5c7a"][i%4];z.style.animationDelay=Math.random()*.4+"s";box.appendChild(z)}setTimeout(()=>box.innerHTML="",2200)}
+function openRegister(){document.getElementById("rDate").value=new Date().toISOString().slice(0,10);document.getElementById("registerModal").classList.add("open");document.getElementById("rAmount").focus()}
+function closeRegister(){document.getElementById("registerModal").classList.remove("open")}
+function saveEntry(){
+  const amount=+document.getElementById("rAmount").value;if(!amount||amount<0)return toast("Introduce una cantidad válida.");
+  const before=pct(),base=Math.max(10,Math.round(amount*20)),xp=base+(+document.getElementById("rBonus").value||0);
+  data.entries.push({id:Date.now(),amount,date:document.getElementById("rDate").value,duration:+document.getElementById("rDuration").value||0,type:document.getElementById("rType").value,feel:document.getElementById("rFeel").value,notes:document.getElementById("rNotes").value,xp});
+  data.xp+=xp;save();closeRegister();render();
+  if(pct()>before||Math.floor(data.xp/100)>Math.floor((data.xp-xp)/100)){celebrate();toast("NIVEL / HITOS DESBLOQUEADOS · +"+xp+" XP")}else toast("PROGRESO REGISTRADO · +"+xp+" XP");
+  ["rAmount","rDuration","rBonus","rNotes"].forEach(id=>document.getElementById(id).value=id==="rBonus"?0:"");
+}
+function fillConfig(){
+  const c=data.config;document.getElementById("cfgTitle").value=c.title;document.getElementById("cfgDesc").value=c.desc;document.getElementById("cfgTarget").value=c.target;document.getElementById("cfgUnit").value=c.unit;document.getElementById("cfgStart").value=c.start;document.getElementById("cfgDeadline").value=c.deadline;document.getElementById("cfgWeeks").value=c.weeks.map(w=>`${w.goal} | ${w.name}`).join("\n")
+}
+function saveConfig(){
+  const lines=document.getElementById("cfgWeeks").value.split("\n").map(x=>x.trim()).filter(Boolean);
+  const weeks=lines.map((x,i)=>{let [g,n]=x.split("|");return {goal:+g.trim()||0,name:(n||"Etapa "+(i+1)).trim()}}).filter(x=>x.goal>0);
+  data.config={title:document.getElementById("cfgTitle").value||"Mi misión",desc:document.getElementById("cfgDesc").value||"",target:+document.getElementById("cfgTarget").value||1,unit:document.getElementById("cfgUnit").value||"unidades",start:document.getElementById("cfgStart").value,deadline:document.getElementById("cfgDeadline").value,weeks:weeks.length?weeks:defaultData.config.weeks};
+  save();render();toast("CONFIGURACIÓN GUARDADA")
+}
+function resetAll(){if(confirm("¿Seguro? Se borrarán registros y XP de este dispositivo.")){data.entries=[];data.xp=0;data.unlocked=[];save();render();toast("PROGRESO REINICIADO")}}
+function showView(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));document.getElementById(v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));window.scrollTo({top:0,behavior:"smooth"});if(v==="stats"){draw("chart2",true)}}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showView(b.dataset.view));
+window.addEventListener("resize",()=>{draw("chart",false);draw("chart2",true)});
+render();
+</script>
+</body>
+</html>
